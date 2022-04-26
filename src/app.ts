@@ -2,7 +2,7 @@ import express from 'express';
 import sequelize from './Database'
 import Config from './Config';
 import cors from 'cors'
-import Routers from './Routers';
+import Routers from './Routes';
 const app = express();
 app.use(cors({}));
 
