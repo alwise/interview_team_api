@@ -10,5 +10,5 @@ export default Router().use('/users',UserRoute)
                         .use('/invites',InviteRoute)
                         .use('/team-members',TeamMemberRoute)
                         .use('/file',FileRoute)
-                        .use('*',(req,res)=> res.send(failedResponse({statusCode:400,message:'Unauthorized user'})));
+                        
                         
