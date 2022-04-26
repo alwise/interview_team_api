@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { Dialect } from 'sequelize/types';
+import { Dialect } from 'sequelize';
 dotenv.config()
 const dialect : Dialect = 'postgres';
 
