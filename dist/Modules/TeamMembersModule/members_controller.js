@@ -28,7 +28,9 @@ const TeamMemberController = {
         return (0, RequestHandler_1.successResponse)({ message: 'Updated successfully', data });
     }),
     delete: (teamMemberData) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield member_models_1.TeamMemberOperations.delete(JSON.parse(JSON.stringify(teamMemberData.queries)));
+        const { userId, teamId } = JSON.parse(JSON.stringify(teamMemberData.queries));
+        const data = yield member_models_1.TeamMemberOperations.delete({ userId, teamId });
+        console.log('Deting...', userId, teamId);
         return (0, RequestHandler_1.successResponse)({ message: 'Deleted successfully', data });
     }),
     findByUid: (teamMemberData) => __awaiter(void 0, void 0, void 0, function* () {
