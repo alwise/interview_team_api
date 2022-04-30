@@ -18,6 +18,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "aws-sdk": "^2.1125.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",

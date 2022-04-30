@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { InviteInt, InviteStatus } from "../../Helpers/interfaces";
 import { failedResponse, successResponse } from "../../MiddleWare/RequestHandler";
 import { TeamMember } from "../TeamMembersModule";
-import { User } from "../UsersModule";
+import { AuthMiddleware, User } from "../UsersModule";
 import { Invite } from "./invite_model";
 const InviteMiddleware = {
 
@@ -18,11 +18,12 @@ const InviteMiddleware = {
                 where:{email:data.email.toLocaleLowerCase()}
             });
 
+
             if(user?.uid) {
                 const userAlreadyTeamMember = await TeamMember.findOne({
                     where:{teamId:data?.teamId, userId:user?.uid}
                 });
-                if(userAlreadyTeamMember?.id)return res.send (failedResponse({message:'User already assigned to team',error:{message:'team id is required.'}}));
+                if(userAlreadyTeamMember?.id)return res.send (failedResponse({message:'Invitee already assigned to this team',error:{message:'invitee is already a member'}}));
             }
             req.body = {
                 teamId:data?.teamId,
@@ -49,8 +50,16 @@ const InviteMiddleware = {
             const status:InviteStatus = inviteExists.status;
             if(status !== 'Sent')return res.send (failedResponse({message:'Invalid invitation link',error:{message:'no id specified for invitation link'}}));
 
-            const userExist = await User.findOne({where:{email:inviteExists?.email}});
-            return res.send (successResponse({message:'Data retrieved successfully.',data:userExist}));
+            const userExist = await User.findOne({where:{email:inviteExists?.email}, attributes:{exclude:['password']} });
+            
+            let response:any = {email:inviteExists?.email};
+            if(userExist?.uid || userExist?.uid?.length > 6){
+                response = await AuthMiddleware.loginResponse(userExist);
+            }
+            if(!response?.uid || response?.uid === undefined){
+                return res.send (successResponse({message:'Your acceptance process is pending while you create account',data:response}));
+            }
+            return res.send (successResponse({message:'Data retrieved successfully.',data:response}));
         } catch (error) {
             return res.send (failedResponse({message:'Unable to complete request',error}));
         }

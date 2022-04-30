@@ -1,7 +1,7 @@
 import { Request,Response } from "express"
 import { TeamMemberInt } from "../../Helpers/interfaces"
 import { failedResponse } from "../../MiddleWare/RequestHandler";
-import { TeamMember } from "./member_models";
+import TeamMember from "./member_models";
 const TeamMemberMiddleware = {
 
     validateCreate: async (req:Request,res:Response,next:any)=>{
@@ -15,9 +15,9 @@ const TeamMemberMiddleware = {
 
             if(!data?.userId || data?.userId?.length == 0) return res.send (failedResponse({message:'Unable to complete request',error:{message:'User id is required.'}}));
 
-            const exist = await TeamMember.findOne({where:{userId:data.userId,teamId:data?.teamId}})
+            const exist = await TeamMember.findOne({where:{userId:data?.userId,teamId:data?.teamId}})
 
-            if(!exist?.id || exist?.id == undefined || exist?.id?.length ==0 ) return res.send (failedResponse({message:'User already assigned to team',error:{message:'User already assigned to this service'}}));
+            if(exist?.id || exist?.id?.length > 0 ) return res.send (failedResponse({message:'User already assigned to team',error:{message:'User already assigned to this service'}}));
             req.body = {
                 role:data?.role,
                 teamId:data?.teamId,

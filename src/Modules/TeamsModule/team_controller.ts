@@ -1,4 +1,5 @@
-import { RequestData, ResponseData, successResponse } from "../../MiddleWare/RequestHandler"
+import { RequestData, ResponseData, successResponse } from "../../MiddleWare/RequestHandler";
+// import { TeamMember } from "../TeamMembersModule";
 import TeamOperations from "./team_model";
 const TeamController = {
 
@@ -13,7 +14,9 @@ const TeamController = {
     },
 
     delete:async (teamData:RequestData):Promise<ResponseData>=>{
-        const data = await TeamOperations.delete(JSON.parse(JSON.stringify(teamData.queries)));
+        const data = await TeamOperations.delete(JSON.parse(JSON.stringify(teamData?.body)));
+        console.log(teamData);
+        
         return successResponse({message:'Deleted successfully',data });
     },
 

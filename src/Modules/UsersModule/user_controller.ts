@@ -28,6 +28,15 @@ const UserController = {
         const data = await UserOperations.findManyByOptions(JSON.parse(JSON.stringify(userData?.queries)));
         return successResponse({message:'Data retrieved successfully.',data });
     },
+    findForTeam:async (userData:RequestData):Promise<ResponseData>=>{
+        const {id} = JSON.parse(JSON.stringify(userData?.queries));
+        const ids = [];
+        id.forEach(idVal => {
+            ids.push(idVal);
+        });
+        const data = await UserOperations.findForTeam(ids);
+        return successResponse({message:'Data retrieved successfully.',data });
+    },
 
 }
 

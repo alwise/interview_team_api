@@ -5,6 +5,6 @@ import Config from "../Config";
  */
 const sequelize =  new Sequelize(Config.database.uri,Config.database.options);
 
-sequelize.authenticate();
+// sequelize.authenticate();
 
 export default sequelize;

@@ -1,12 +1,13 @@
-import { DataTypes, Model, UUIDV4 } from "sequelize";
+import { DataTypes, Model, Op, UUIDV4 } from "sequelize";
 import sequelize from "../../Database";
 import { UserInt } from "../../Helpers/interfaces";
+import { Team } from "../TeamsModule";
 export class User extends Model {
   uid!: string;
   name!: string;
   profilePhoto!: string;
   email!: string;
-  username!: string;
+  // username!: string;
   password!: string;
 }
 
@@ -29,10 +30,11 @@ User.init(
       unique: { name: "email", msg: "Email already exist." },
       validate: { isEmail: { msg: "Invalid email." } },
     },
-    username: {
-      type: DataTypes.STRING(60),
-      unique: { name: "username", msg: "username already exist." },
-    },
+    // username: {
+    //   type: DataTypes.STRING(60),
+    //   allowNull:true
+    //   // unique: { name: "username", msg: "username already exist." },
+    // },
     password: { type: DataTypes.STRING(120) },
   },
   {
@@ -41,6 +43,27 @@ User.init(
     sequelize,
   }
 );
+
+User.hasMany(Team,{foreignKey:'ownerId',onDelete:'CASCADE'})
+
+export class UserPasswordReset extends Model{
+  id:string;
+  uid:string;
+  password:string;
+  expiry:Date;
+}
+
+  UserPasswordReset.init({
+    id:{type:DataTypes.UUID,allowNull:false,defaultValue:UUIDV4,primaryKey:true},
+    uid:{type:DataTypes.UUID,allowNull:false},
+    password:{type:DataTypes.STRING(180),allowNull:false},
+    expiry:{type:DataTypes.DATE,allowNull:false}
+  },{
+    underscored: true,
+    freezeTableName: true,
+    sequelize,
+
+  })
 
 /**
  *  crude operations
@@ -55,6 +78,8 @@ const UserOperations = {
   findOneByID: async (uid: string) => await User.findByPk(uid),
   findManyByOptions: async (options: object) =>
     await User.findAll({ where: { ...options } }),
+  findForTeam: async (userIdList) =>
+    await User.findAll({ where: { uid:{[Op.in]:userIdList} },attributes:{exclude:['password']} }),
 };
 
 export default UserOperations;

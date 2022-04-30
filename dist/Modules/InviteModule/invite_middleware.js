@@ -30,7 +30,7 @@ const InviteMiddleware = {
                     where: { teamId: data === null || data === void 0 ? void 0 : data.teamId, userId: user === null || user === void 0 ? void 0 : user.uid }
                 });
                 if (userAlreadyTeamMember === null || userAlreadyTeamMember === void 0 ? void 0 : userAlreadyTeamMember.id)
-                    return res.send((0, RequestHandler_1.failedResponse)({ message: 'User already assigned to team', error: { message: 'team id is required.' } }));
+                    return res.send((0, RequestHandler_1.failedResponse)({ message: 'Invitee already assigned to this team', error: { message: 'invitee is already a member' } }));
             }
             req.body = {
                 teamId: data === null || data === void 0 ? void 0 : data.teamId,
@@ -45,7 +45,7 @@ const InviteMiddleware = {
         }
     }),
     isValidLinkAnUserExist: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        var _c, _d;
+        var _c, _d, _e;
         try {
             const data = JSON.parse(JSON.stringify(req.query));
             if (!(data === null || data === void 0 ? void 0 : data.id) || (data === null || data === void 0 ? void 0 : data.id) === undefined || ((_c = data === null || data === void 0 ? void 0 : data.id) === null || _c === void 0 ? void 0 : _c.length) < 3)
@@ -56,21 +56,28 @@ const InviteMiddleware = {
             const status = inviteExists.status;
             if (status !== 'Sent')
                 return res.send((0, RequestHandler_1.failedResponse)({ message: 'Invalid invitation link', error: { message: 'no id specified for invitation link' } }));
-            const userExist = yield UsersModule_1.User.findOne({ where: { email: inviteExists === null || inviteExists === void 0 ? void 0 : inviteExists.email } });
-            return res.send((0, RequestHandler_1.successResponse)({ message: 'Data retrieved successfully.', data: userExist }));
+            const userExist = yield UsersModule_1.User.findOne({ where: { email: inviteExists === null || inviteExists === void 0 ? void 0 : inviteExists.email }, attributes: { exclude: ['password'] } });
+            let response = { email: inviteExists === null || inviteExists === void 0 ? void 0 : inviteExists.email };
+            if ((userExist === null || userExist === void 0 ? void 0 : userExist.uid) || ((_e = userExist === null || userExist === void 0 ? void 0 : userExist.uid) === null || _e === void 0 ? void 0 : _e.length) > 6) {
+                response = yield UsersModule_1.AuthMiddleware.loginResponse(userExist);
+            }
+            if (!(response === null || response === void 0 ? void 0 : response.uid) || (response === null || response === void 0 ? void 0 : response.uid) === undefined) {
+                return res.send((0, RequestHandler_1.successResponse)({ message: 'Your acceptance process is pending while you create account', data: response }));
+            }
+            return res.send((0, RequestHandler_1.successResponse)({ message: 'Data retrieved successfully.', data: response }));
         }
         catch (error) {
             return res.send((0, RequestHandler_1.failedResponse)({ message: 'Unable to complete request', error }));
         }
     }),
     isValidLink: (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-        var _e, _f;
+        var _f, _g;
         try {
             const data = JSON.parse(JSON.stringify(req.query));
-            if (!(data === null || data === void 0 ? void 0 : data.id) || (data === null || data === void 0 ? void 0 : data.id) === undefined || ((_e = data === null || data === void 0 ? void 0 : data.id) === null || _e === void 0 ? void 0 : _e.length) < 3)
+            if (!(data === null || data === void 0 ? void 0 : data.id) || (data === null || data === void 0 ? void 0 : data.id) === undefined || ((_f = data === null || data === void 0 ? void 0 : data.id) === null || _f === void 0 ? void 0 : _f.length) < 3)
                 return res.send((0, RequestHandler_1.failedResponse)({ message: 'Invalid invitation link', error: { message: 'no id specified for invitation link' } }));
             const inviteExists = yield invite_model_1.Invite.findByPk(data === null || data === void 0 ? void 0 : data.id);
-            if (!(inviteExists === null || inviteExists === void 0 ? void 0 : inviteExists.id) || (inviteExists === null || inviteExists === void 0 ? void 0 : inviteExists.id) === undefined || ((_f = inviteExists === null || inviteExists === void 0 ? void 0 : inviteExists.id) === null || _f === void 0 ? void 0 : _f.length) < 3)
+            if (!(inviteExists === null || inviteExists === void 0 ? void 0 : inviteExists.id) || (inviteExists === null || inviteExists === void 0 ? void 0 : inviteExists.id) === undefined || ((_g = inviteExists === null || inviteExists === void 0 ? void 0 : inviteExists.id) === null || _g === void 0 ? void 0 : _g.length) < 3)
                 return res.send((0, RequestHandler_1.failedResponse)({ message: 'Invalid invitation link', error: { message: 'no id specified for invitation link' } }));
             const status = inviteExists === null || inviteExists === void 0 ? void 0 : inviteExists.status;
             if (status !== 'Sent')

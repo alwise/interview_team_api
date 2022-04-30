@@ -22,7 +22,7 @@ Invite.init({
     id: { type: sequelize_1.DataTypes.UUID, allowNull: false, primaryKey: true, defaultValue: sequelize_1.UUIDV4 },
     teamId: { type: sequelize_1.DataTypes.STRING(180) },
     email: { type: sequelize_1.DataTypes.STRING(150) },
-    status: { type: sequelize_1.DataTypes.STRING(25), defaultValue: 'Send' },
+    status: { type: sequelize_1.DataTypes.STRING(25), defaultValue: 'Sent' },
     metadata: { type: sequelize_1.DataTypes.JSON },
 }, { sequelize: index_1.default, underscored: true, freezeTableName: true });
 const InviteOperation = {

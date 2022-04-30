@@ -4,7 +4,8 @@ import sequelize from '../../Database';
 import { TeamMemberInt } from '../../Helpers/interfaces';
 import { User } from '../UsersModule';
 import { Team } from '../TeamsModule';
-export class TeamMember extends Model{
+
+export default class TeamMember extends Model{
     id?:string;
     userId?:string;
     teamId?:string
@@ -16,10 +17,10 @@ TeamMember.init({
     userId :{
         type:DataTypes.UUID,
         allowNull:false,
-        references:{
-            model:User,
-            key:'uid'
-        }
+        // references:{
+        //     model:User,
+        //     key:'uid'
+        // }
     },
     teamId  :{ type:DataTypes.UUID,
         allowNull:false,
@@ -28,13 +29,12 @@ TeamMember.init({
             key:'id'
         }
     },
-    role :{type:DataTypes.STRING(50),allowNull:false,defaultValue:'Member'},
+    role :{type:DataTypes.STRING(50),allowNull:false,defaultValue:'member'},
 },{sequelize,underscored:true,freezeTableName:true});
 
 TeamMember.belongsTo(Team,{foreignKey:'teamId',onDelete:'cascade'});
-TeamMember.belongsTo(User,{foreignKey:'userId',onDelete:'cascade'});
 
-const TeamMemberOperations = {
+export const TeamMemberOperations = {
     create: async (teamMemberData: Partial<TeamMemberInt>) =>
              await TeamMember. create(teamMemberData),
     
@@ -48,10 +48,14 @@ const TeamMemberOperations = {
     findManyByOptions: async (options: object) =>
       await TeamMember.findAll({ where: { ...options },include:[{all:true}]}),
 
+
 }
 
-export default TeamMemberOperations;
 
+// export default TeamMemberOperations;
+
+
+// TeamMember.belongsTo(User,{foreignKey:'userId'});
 
 
 

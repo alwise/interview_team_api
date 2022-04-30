@@ -40,7 +40,7 @@ const successResponse = (data) => {
 exports.successResponse = successResponse;
 const failedResponse = (data) => {
     return {
-        status: (data === null || data === void 0 ? void 0 : data.status) || true,
+        status: false,
         message: (data === null || data === void 0 ? void 0 : data.message) || 'Unable to complete request',
         statusCode: (data === null || data === void 0 ? void 0 : data.statusCode) || 500,
         // data:data?.data || [],

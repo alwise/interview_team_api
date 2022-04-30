@@ -37,8 +37,8 @@ const InviteController = {
                         }
                     ],
                     Subject: 'Team Invitation',
-                    TextPart: `Accept invitation to join @${team === null || team === void 0 ? void 0 : team.name} ${Config_1.default.frontEnd.host}?id=${data === null || data === void 0 ? void 0 : data.id}`,
-                    HTMLPart: MessageServices_1.emailTemplate.inviteTemplate({ groupName: team === null || team === void 0 ? void 0 : team.name, link: `${Config_1.default.frontEnd.host}?id=${data === null || data === void 0 ? void 0 : data.id}` })
+                    TextPart: `Accept invitation to join @${team === null || team === void 0 ? void 0 : team.name} ${Config_1.default.frontEnd.inviteLink}${data === null || data === void 0 ? void 0 : data.id}`,
+                    HTMLPart: MessageServices_1.emailTemplate.inviteTemplate({ groupName: team === null || team === void 0 ? void 0 : team.name, link: `${Config_1.default.frontEnd.inviteLink}${data === null || data === void 0 ? void 0 : data.id}`, title: 'Accept invite', message: `This is an invitation message sent from @${team === null || team === void 0 ? void 0 : team.name}.` })
                 }
             ]
         });

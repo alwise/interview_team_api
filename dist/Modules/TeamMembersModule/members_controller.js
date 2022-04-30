@@ -8,32 +8,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const RequestHandler_1 = require("../../MiddleWare/RequestHandler");
-const member_models_1 = __importDefault(require("./member_models"));
+const member_models_1 = require("./member_models");
 const TeamMemberController = {
     create: (teamMemberData) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield member_models_1.default.create(teamMemberData.body);
-        return (0, RequestHandler_1.successResponse)({ message: 'Created successfully', data });
+        const { userId, teamId } = teamMemberData === null || teamMemberData === void 0 ? void 0 : teamMemberData.body;
+        const exist = yield member_models_1.TeamMemberOperations.findManyByOptions({
+            userId, teamId
+        });
+        if (exist.length > 0) {
+            return (0, RequestHandler_1.failedResponse)({ message: 'Invitee already assigned to this team', data: exist[0] });
+        }
+        const data = yield member_models_1.TeamMemberOperations.create(teamMemberData.body);
+        return (0, RequestHandler_1.successResponse)({ message: 'You have successfully accepted invite', data });
     }),
     update: (teamMemberData) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield member_models_1.default.update(teamMemberData.body);
+        const data = yield member_models_1.TeamMemberOperations.update(teamMemberData.body);
         return (0, RequestHandler_1.successResponse)({ message: 'Updated successfully', data });
     }),
     delete: (teamMemberData) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield member_models_1.default.delete(JSON.parse(JSON.stringify(teamMemberData.queries)));
+        const data = yield member_models_1.TeamMemberOperations.delete(JSON.parse(JSON.stringify(teamMemberData.queries)));
         return (0, RequestHandler_1.successResponse)({ message: 'Deleted successfully', data });
     }),
     findByUid: (teamMemberData) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
-        const data = yield member_models_1.default.findOneByID((_a = JSON.parse(JSON.stringify(teamMemberData.params))) === null || _a === void 0 ? void 0 : _a.id);
+        const data = yield member_models_1.TeamMemberOperations.findOneByID((_a = JSON.parse(JSON.stringify(teamMemberData.params))) === null || _a === void 0 ? void 0 : _a.id);
         return (0, RequestHandler_1.successResponse)({ message: 'Data retrieved successfully.', data });
     }),
     findAllByOptions: (teamMemberData) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield member_models_1.default.findManyByOptions(JSON.parse(JSON.stringify(teamMemberData.queries)));
+        const data = yield member_models_1.TeamMemberOperations.findManyByOptions(JSON.parse(JSON.stringify(teamMemberData.queries)));
         return (0, RequestHandler_1.successResponse)({ message: 'Data retrieved successfully.', data });
     }),
 };

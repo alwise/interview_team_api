@@ -9,6 +9,7 @@ app.use(cors({}));
 
 app.use(express.urlencoded({extended:true,limit:'50mb'}));
 app.use(express.json());
+app.use('/files', express.static('./public/'));
 app.use('/api/v1',Routers);
 app.use('*',(req,res)=> res.send(failedResponse({statusCode:400,message:'Unauthorized user'})));
 app.listen(Config.keys.PORT,async()=>{

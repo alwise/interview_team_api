@@ -12,9 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const MiddleWare_1 = require("../../MiddleWare");
 const _1 = require(".");
+// import { AuthMiddleware } from "../UsersModule";
 exports.default = (0, express_1.Router)()
-    .post('/create', MiddleWare_1.AuthMiddleware.authenticated, _1.TeamMiddleware.validateTeamCreation, (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamController.create); }))
-    .patch('/update', MiddleWare_1.AuthMiddleware.authenticated, _1.TeamMiddleware.validateTeamUpdate, (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamController.update); }))
-    .delete('/delete', MiddleWare_1.AuthMiddleware.authenticated, (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamController.delete); }))
-    .get('/:id', MiddleWare_1.AuthMiddleware.authenticated, (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamController.findByUid); }))
-    .get('/', MiddleWare_1.AuthMiddleware.authenticated, (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamController.findAllByOptions); }));
+    .post('/create', _1.TeamMiddleware.validateTeamCreation, (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamController.create); }))
+    .patch('/update', _1.TeamMiddleware.validateTeamUpdate, (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamController.update); }))
+    .delete('/delete', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamController.delete); }))
+    .get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamController.findByUid); }))
+    .get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamController.findAllByOptions); }));

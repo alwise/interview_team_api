@@ -23,8 +23,8 @@ const InviteController = {
                }
              ],
              Subject:'Team Invitation',
-             TextPart:`Accept invitation to join @${team?.name} ${Config.frontEnd.host}?id=${data?.id}`,
-             HTMLPart: emailTemplate.inviteTemplate({groupName:team?.name,link:`${Config.frontEnd.host}?id=${data?.id}`})
+             TextPart:`Accept invitation to join @${team?.name} ${Config.frontEnd.inviteLink}${data?.id}`,
+             HTMLPart: emailTemplate.inviteTemplate({groupName:team?.name,link:`${Config.frontEnd.inviteLink}${data?.id}`, title:'Accept invite',message:`This is an invitation message sent from @${team?.name}.`})
             }]
        });
     
@@ -41,6 +41,7 @@ const InviteController = {
             teamId:data?.teamId,
             role:'Member'
         }
+        
         const result =  await TeamMemberController.create(inviteData);
         if(result.status == true)
             await InviteOperation.update({...data,status:'Accepted'});

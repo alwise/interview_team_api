@@ -22,6 +22,7 @@ const app = (0, express_1.default)();
 app.use((0, cors_1.default)({}));
 app.use(express_1.default.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express_1.default.json());
+app.use('/files', express_1.default.static('./public/'));
 app.use('/api/v1', Routes_1.default);
 app.use('*', (req, res) => res.send((0, RequestHandler_1.failedResponse)({ statusCode: 400, message: 'Unauthorized user' })));
 app.listen(Config_1.default.keys.PORT, () => __awaiter(void 0, void 0, void 0, function* () {

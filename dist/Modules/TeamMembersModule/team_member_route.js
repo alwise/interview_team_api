@@ -15,5 +15,5 @@ const _1 = require(".");
 exports.default = (0, express_1.Router)()
     .post('/create', _1.TeamMemberMiddleware.validateCreate, (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamMemberController.create); }))
     .delete('/delete', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamMemberController.delete); }))
-    .get('/:id', MiddleWare_1.AuthMiddleware.authenticated, (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamMemberController.findByUid); }))
-    .get('/', MiddleWare_1.AuthMiddleware.authenticated, (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamMemberController.findAllByOptions); }));
+    .get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamMemberController.findByUid); }))
+    .get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.TeamMemberController.findAllByOptions); }));

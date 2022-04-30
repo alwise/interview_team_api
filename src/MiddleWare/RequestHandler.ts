@@ -1,6 +1,6 @@
 
 import { Request,Response } from 'express';
-type responseMessage = 'Updated successfully' | 'Request completed successfully' |'Created successfully' | 'Deleted successfully' | 'Unable to complete request' |'Data retrieved successfully.' | 'One or more field is required' | 'File uploaded successfully' | 'Unauthorized user' | 'Your session has expired login required' |'password must be at least 4 characters' | 'username is required' | 'password is required' | 'email is required' |'email is already used' | 'username is already used' | 'email or username is required' |'wrong login credentials' | 'Login successfully' | 'Team name is required' | 'User already assigned to team' | 'Invalid invitation link' | 'You have successfully accepted invite'
+type responseMessage = 'Updated successfully' | 'Request completed successfully' |'Created successfully' | 'Deleted successfully' | 'Unable to complete request' |'Data retrieved successfully.' | 'One or more field is required' | 'File uploaded successfully' | 'Unauthorized user' | 'Your session has expired login required' |'password must be at least 4 characters' | 'username is required' | 'password is required' | 'email is required' |'email is already used' | 'username is already used' | 'email or username is required' |'wrong login credentials' | 'Login successfully' | 'Team name is required' | 'User already assigned to team' | 'Invalid invitation link' | 'You have successfully accepted invite' | 'Invalid email provided' |'No account found with this email' | 'Confirmation email have been sent to you. Kindly check your spam if it is not in your inbox. This link is valid for 10 minutes from now.' | 'Invalid link' | 'Password reset link expired' | 'Password reset successfully' |'Team name already taken' | 'Invitee already assigned to this team' | 'Your acceptance process is pending while you create account'
 // type responseStatus = true | false
 export interface RequestData {
   file?:any;
@@ -52,7 +52,7 @@ export type callback = (requestData: RequestData)=> Promise<ResponseData>
 
  export const failedResponse = (data:Partial<ResponseData>) : ResponseData =>{
     return {
-        status:data?.status || true,
+        status:false,
         message:data?.message || 'Unable to complete request',
         statusCode:data?.statusCode || 500,
         // data:data?.data || [],

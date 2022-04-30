@@ -1,10 +1,21 @@
-import { RequestData, ResponseData, successResponse } from "../../MiddleWare/RequestHandler"
-import TeamMemberOperations from "./member_models";
+import { failedResponse, RequestData, ResponseData, successResponse } from "../../MiddleWare/RequestHandler"
+import {TeamMemberOperations} from "./member_models";
 const TeamMemberController = {
 
     create:async (teamMemberData:RequestData):Promise<ResponseData>=>{
+
+    const {userId,
+        teamId} = teamMemberData?.body;
+        const exist = await TeamMemberOperations.findManyByOptions({
+            userId,teamId
+        });
+
+        if(exist.length > 0){
+            return failedResponse({message:'Invitee already assigned to this team',data:exist[0]})
+        }
+
         const data = await TeamMemberOperations.create(teamMemberData.body);
-        return successResponse({message:'Created successfully',data });
+        return successResponse({message:'You have successfully accepted invite',data });
     },
 
     update:async (teamMemberData:RequestData):Promise<ResponseData>=>{

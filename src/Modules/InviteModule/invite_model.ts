@@ -15,7 +15,7 @@ Invite.init({
     id: {type:DataTypes.UUID,allowNull:false,primaryKey:true,defaultValue:UUIDV4},
     teamId: {type:DataTypes.STRING(180)},
     email: {type:DataTypes.STRING(150)},
-    status: {type:DataTypes.STRING(25),defaultValue:'Send'},
+    status: {type:DataTypes.STRING(25),defaultValue:'Sent'},
     metadata: {type:DataTypes.JSON},
 },{sequelize,underscored:true,freezeTableName:true})
 

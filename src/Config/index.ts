@@ -44,7 +44,9 @@ export default {
         senderName: process.env.senderName,
     },
     frontEnd:{
-        host:'https://team.bookgmt.com/',
+        passwordResetLink:process.env.NODE_ENV == 'dev' ? 'http://localhost:3000/reset-password/?id=' : 'https://team.bookgmt.com/reset-password/?id=',
+
+        inviteLink:process.env.NODE_ENV == 'dev' ? 'http://localhost:3000/accept-invite/?id=' : 'https://team.bookgmt.com/accept-invite/?id=',
     }
 
 

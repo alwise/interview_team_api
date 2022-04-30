@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const RequestHandler_1 = require("../../MiddleWare/RequestHandler");
+// import { TeamMember } from "../TeamMembersModule";
 const team_model_1 = __importDefault(require("./team_model"));
 const TeamController = {
     create: (teamData) => __awaiter(void 0, void 0, void 0, function* () {
@@ -24,7 +25,8 @@ const TeamController = {
         return (0, RequestHandler_1.successResponse)({ message: 'Updated successfully', data });
     }),
     delete: (teamData) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield team_model_1.default.delete(JSON.parse(JSON.stringify(teamData.queries)));
+        const data = yield team_model_1.default.delete(JSON.parse(JSON.stringify(teamData === null || teamData === void 0 ? void 0 : teamData.body)));
+        console.log(teamData);
         return (0, RequestHandler_1.successResponse)({ message: 'Deleted successfully', data });
     }),
     findByUid: (teamData) => __awaiter(void 0, void 0, void 0, function* () {

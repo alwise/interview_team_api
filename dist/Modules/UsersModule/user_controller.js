@@ -38,5 +38,14 @@ const UserController = {
         const data = yield user_model_1.default.findManyByOptions(JSON.parse(JSON.stringify(userData === null || userData === void 0 ? void 0 : userData.queries)));
         return (0, RequestHandler_1.successResponse)({ message: 'Data retrieved successfully.', data });
     }),
+    findForTeam: (userData) => __awaiter(void 0, void 0, void 0, function* () {
+        const { id } = JSON.parse(JSON.stringify(userData === null || userData === void 0 ? void 0 : userData.queries));
+        const ids = [];
+        id.forEach(idVal => {
+            ids.push(idVal);
+        });
+        const data = yield user_model_1.default.findForTeam(ids);
+        return (0, RequestHandler_1.successResponse)({ message: 'Data retrieved successfully.', data });
+    }),
 };
 exports.default = UserController;

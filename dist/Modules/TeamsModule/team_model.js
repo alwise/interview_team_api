@@ -24,13 +24,13 @@ exports.Team = Team;
 Team.init({
     id: { type: sequelize_1.DataTypes.UUID, allowNull: false, primaryKey: true, defaultValue: sequelize_1.UUIDV4 },
     name: { type: sequelize_1.DataTypes.STRING(180), allowNull: false, unique: { name: 'name', msg: 'Team name already exist' } },
-    ownerId: { type: sequelize_1.DataTypes.STRING(180), allowNull: false },
+    // ownerId:{type:DataTypes.STRING(180),allowNull:false},
 }, { sequelize: index_1.default, underscored: true, freezeTableName: true });
 const TeamOperations = {
     create: (teamData) => __awaiter(void 0, void 0, void 0, function* () { return yield Team.create(teamData); }),
     update: (teamData) => __awaiter(void 0, void 0, void 0, function* () { return yield Team.update({ teamData }, { where: { id: teamData.id } }); }),
     delete: (teamData) => __awaiter(void 0, void 0, void 0, function* () { return yield Team.destroy({ where: { id: teamData.id } }); }),
     findOneByID: (id) => __awaiter(void 0, void 0, void 0, function* () { return yield Team.findByPk(id); }),
-    findManyByOptions: (options) => __awaiter(void 0, void 0, void 0, function* () { return yield Team.findAll({ where: Object.assign({}, options) }); }),
+    findManyByOptions: (options) => __awaiter(void 0, void 0, void 0, function* () { return yield Team.findAll({ where: Object.assign({}, options) }); })
 };
 exports.default = TeamOperations;

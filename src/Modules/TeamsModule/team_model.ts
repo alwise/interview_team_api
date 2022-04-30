@@ -5,7 +5,7 @@ import { TeamInt } from "../../Helpers/interfaces";
 export class Team extends Model{
     id:string;
     name:string;
-    ownerId:string
+    // ownerId:string
 }
 /**
  *  initialize & create team table
@@ -13,7 +13,7 @@ export class Team extends Model{
 Team.init({
     id:{type:DataTypes.UUID,allowNull:false,primaryKey:true,defaultValue:UUIDV4},
     name:{type:DataTypes.STRING(180),allowNull:false,unique:{name:'name',msg:'Team name already exist'}},
-    ownerId:{type:DataTypes.STRING(180),allowNull:false},
+    // ownerId:{type:DataTypes.STRING(180),allowNull:false},
 },{sequelize,underscored:true,freezeTableName:true})
 
 
@@ -25,7 +25,7 @@ const TeamOperations = {
       await Team.destroy({ where: { id: teamData.id } }),
     findOneByID: async (id: string) => await Team.findByPk(id),
     findManyByOptions: async (options: object) =>
-      await Team.findAll({ where: { ...options } }),
+      await Team.findAll({where:{...options}})
 }
 
 export default TeamOperations;

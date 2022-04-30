@@ -9,5 +9,5 @@ const Config_1 = __importDefault(require("../Config"));
  * initialize database
  */
 const sequelize = new sequelize_1.Sequelize(Config_1.default.database.uri, Config_1.default.database.options);
-sequelize.authenticate();
+// sequelize.authenticate();
 exports.default = sequelize;

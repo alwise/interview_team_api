@@ -8,9 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const RequestHandler_1 = require("../../MiddleWare/RequestHandler");
-const member_models_1 = require("./member_models");
+const member_models_1 = __importDefault(require("./member_models"));
 const TeamMemberMiddleware = {
     validateCreate: (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b, _c, _d;
@@ -22,8 +25,8 @@ const TeamMemberMiddleware = {
                 return res.send((0, RequestHandler_1.failedResponse)({ message: 'Unable to complete request', error: { message: 'Team id is required.' } }));
             if (!(data === null || data === void 0 ? void 0 : data.userId) || ((_c = data === null || data === void 0 ? void 0 : data.userId) === null || _c === void 0 ? void 0 : _c.length) == 0)
                 return res.send((0, RequestHandler_1.failedResponse)({ message: 'Unable to complete request', error: { message: 'User id is required.' } }));
-            const exist = yield member_models_1.TeamMember.findOne({ where: { userId: data.userId, teamId: data === null || data === void 0 ? void 0 : data.teamId } });
-            if (!(exist === null || exist === void 0 ? void 0 : exist.id) || (exist === null || exist === void 0 ? void 0 : exist.id) == undefined || ((_d = exist === null || exist === void 0 ? void 0 : exist.id) === null || _d === void 0 ? void 0 : _d.length) == 0)
+            const exist = yield member_models_1.default.findOne({ where: { userId: data === null || data === void 0 ? void 0 : data.userId, teamId: data === null || data === void 0 ? void 0 : data.teamId } });
+            if ((exist === null || exist === void 0 ? void 0 : exist.id) || ((_d = exist === null || exist === void 0 ? void 0 : exist.id) === null || _d === void 0 ? void 0 : _d.length) > 0)
                 return res.send((0, RequestHandler_1.failedResponse)({ message: 'User already assigned to team', error: { message: 'User already assigned to this service' } }));
             req.body = {
                 role: data === null || data === void 0 ? void 0 : data.role,
