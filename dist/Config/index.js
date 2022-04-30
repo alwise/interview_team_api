@@ -41,7 +41,7 @@ exports.default = {
         privateKey: process.env.privateKey,
         publicKey: process.env.publicKey,
         senderMail: process.env.senderMail,
-        senderName: process.env.senderName,
+        senderName: process.env.sendName,
     },
     frontEnd: {
         passwordResetLink: process.env.NODE_ENV == "dev"
