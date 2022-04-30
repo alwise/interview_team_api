@@ -31,9 +31,12 @@ const UserController = {
     findForTeam:async (userData:RequestData):Promise<ResponseData>=>{
         const {id} = JSON.parse(JSON.stringify(userData?.queries));
         const ids = [];
-        id.forEach(idVal => {
+        id?.forEach(idVal => {
             ids.push(idVal);
         });
+        // console.log(ids);
+        
+        if(ids.length < 1)return successResponse({message:'Data retrieved successfully.',data:[] });
         const data = await UserOperations.findForTeam(ids);
         return successResponse({message:'Data retrieved successfully.',data });
     },

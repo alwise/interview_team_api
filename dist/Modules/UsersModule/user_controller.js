@@ -41,9 +41,12 @@ const UserController = {
     findForTeam: (userData) => __awaiter(void 0, void 0, void 0, function* () {
         const { id } = JSON.parse(JSON.stringify(userData === null || userData === void 0 ? void 0 : userData.queries));
         const ids = [];
-        id.forEach(idVal => {
+        id === null || id === void 0 ? void 0 : id.forEach(idVal => {
             ids.push(idVal);
         });
+        // console.log(ids);
+        if (ids.length < 1)
+            return (0, RequestHandler_1.successResponse)({ message: 'Data retrieved successfully.', data: [] });
         const data = yield user_model_1.default.findForTeam(ids);
         return (0, RequestHandler_1.successResponse)({ message: 'Data retrieved successfully.', data });
     }),

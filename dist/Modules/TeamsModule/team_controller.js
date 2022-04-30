@@ -35,7 +35,8 @@ const TeamController = {
         return (0, RequestHandler_1.successResponse)({ message: 'Data retrieved successfully.', data });
     }),
     findAllByOptions: (teamData) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield team_model_1.default.findManyByOptions(JSON.parse(JSON.stringify(teamData.queries)));
+        const values = JSON.parse(JSON.stringify(teamData.queries));
+        const data = yield team_model_1.default.findManyByOptions(values);
         return (0, RequestHandler_1.successResponse)({ message: 'Data retrieved successfully.', data });
     }),
 };

@@ -37,7 +37,10 @@ const TeamMemberController = {
         return (0, RequestHandler_1.successResponse)({ message: 'Data retrieved successfully.', data });
     }),
     findAllByOptions: (teamMemberData) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield member_models_1.TeamMemberOperations.findManyByOptions(JSON.parse(JSON.stringify(teamMemberData.queries)));
+        const val = JSON.parse(JSON.stringify(teamMemberData.queries));
+        if (!val)
+            return (0, RequestHandler_1.successResponse)({ message: 'Data retrieved successfully.', data: [] });
+        const data = yield member_models_1.TeamMemberOperations.findManyByOptions(val);
         return (0, RequestHandler_1.successResponse)({ message: 'Data retrieved successfully.', data });
     }),
 };

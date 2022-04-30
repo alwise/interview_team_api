@@ -34,7 +34,9 @@ const TeamMemberController = {
     },
 
     findAllByOptions:async (teamMemberData:RequestData):Promise<ResponseData>=>{
-        const data = await TeamMemberOperations.findManyByOptions(JSON.parse(JSON.stringify(teamMemberData.queries)));
+        const val= JSON.parse(JSON.stringify(teamMemberData.queries));
+        if(!val) return successResponse({message:'Data retrieved successfully.',data:[] });
+        const data = await TeamMemberOperations.findManyByOptions(val);
         return successResponse({message:'Data retrieved successfully.',data });
     },
 
