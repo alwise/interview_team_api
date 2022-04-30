@@ -24,7 +24,7 @@ const TeamMemberController = {
     },
 
     delete:async (teamMemberData:RequestData):Promise<ResponseData>=>{
-        const {userId,teamId} = JSON.parse(JSON.stringify(teamMemberData.queries))
+        const {userId,teamId} = JSON.parse(JSON.stringify(teamMemberData.body))
         const data = await TeamMemberOperations.delete({userId,teamId});
         console.log('Deting...',userId,teamId);
         

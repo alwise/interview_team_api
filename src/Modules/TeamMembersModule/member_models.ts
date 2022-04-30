@@ -41,8 +41,8 @@ export const TeamMemberOperations = {
     update: async (teamMemberData: Partial<TeamMemberInt>) =>
              await TeamMember. update({ teamMemberData },{where:{id:teamMemberData.id}}),
     
-    delete: async (teamMemberData: Partial<TeamMemberInt>) =>
-             await TeamMember.create({ teamMemberData }),
+    delete: async (teamMemberData: object) =>
+             await TeamMember.destroy({ where:{...teamMemberData}}),
     findOneByID: async (id: string) => await TeamMember.findByPk(id,{include:[{all:true}]}),
 
     findManyByOptions: async (options: object) =>

@@ -42,7 +42,7 @@ TeamMember.belongsTo(TeamsModule_1.Team, { foreignKey: 'teamId', onDelete: 'casc
 exports.TeamMemberOperations = {
     create: (teamMemberData) => __awaiter(void 0, void 0, void 0, function* () { return yield TeamMember.create(teamMemberData); }),
     update: (teamMemberData) => __awaiter(void 0, void 0, void 0, function* () { return yield TeamMember.update({ teamMemberData }, { where: { id: teamMemberData.id } }); }),
-    delete: (teamMemberData) => __awaiter(void 0, void 0, void 0, function* () { return yield TeamMember.create({ teamMemberData }); }),
+    delete: (teamMemberData) => __awaiter(void 0, void 0, void 0, function* () { return yield TeamMember.destroy({ where: Object.assign({}, teamMemberData) }); }),
     findOneByID: (id) => __awaiter(void 0, void 0, void 0, function* () { return yield TeamMember.findByPk(id, { include: [{ all: true }] }); }),
     findManyByOptions: (options) => __awaiter(void 0, void 0, void 0, function* () { return yield TeamMember.findAll({ where: Object.assign({}, options), include: [{ all: true }] }); }),
 };
