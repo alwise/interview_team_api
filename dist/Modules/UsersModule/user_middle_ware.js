@@ -113,13 +113,18 @@ const AuthMiddleware = {
         }
     }),
     validateUpdateData: (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-        var _g;
+        var _g, _h;
         try {
             const user = req.body;
             if ((user === null || user === void 0 ? void 0 : user.email) && !(user === null || user === void 0 ? void 0 : user.email.includes('@')) && !(user === null || user === void 0 ? void 0 : user.email.includes('.com')))
                 return res.send((0, RequestHandler_1.failedResponse)({ message: 'Invalid email provided' }));
             if (user === null || user === void 0 ? void 0 : user.email) {
-                const newEmail = (_g = user === null || user === void 0 ? void 0 : user.email) === null || _g === void 0 ? void 0 : _g.toLowerCase();
+                const exist = yield _1.User.findOne({ where: { email: user === null || user === void 0 ? void 0 : user.email } });
+                if (exist === null || exist === void 0 ? void 0 : exist.uid) {
+                    if ((exist === null || exist === void 0 ? void 0 : exist.uid.trim()) !== ((_g = user === null || user === void 0 ? void 0 : user.uid) === null || _g === void 0 ? void 0 : _g.trim()))
+                        return res.send((0, RequestHandler_1.failedResponse)({ message: 'email is already used' }));
+                }
+                const newEmail = (_h = user === null || user === void 0 ? void 0 : user.email) === null || _h === void 0 ? void 0 : _h.toLowerCase();
                 user.email = newEmail;
             }
             req.body = user;
@@ -146,17 +151,17 @@ const AuthMiddleware = {
         }
     }),
     requestPasswordReset: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        var _h, _j, _k, _l;
+        var _j, _k, _l, _m;
         try {
             const user = req.body;
-            if (((_h = user === null || user === void 0 ? void 0 : user.email) === null || _h === void 0 ? void 0 : _h.length) === 0 || !(user === null || user === void 0 ? void 0 : user.email.includes('@')) || !(user === null || user === void 0 ? void 0 : user.email.includes('.com')))
+            if (((_j = user === null || user === void 0 ? void 0 : user.email) === null || _j === void 0 ? void 0 : _j.length) === 0 || !(user === null || user === void 0 ? void 0 : user.email.includes('@')) || !(user === null || user === void 0 ? void 0 : user.email.includes('.com')))
                 return res.send((0, RequestHandler_1.failedResponse)({ message: 'Invalid email provided' }));
-            if (((_j = user === null || user === void 0 ? void 0 : user.password) === null || _j === void 0 ? void 0 : _j.length) === 0)
+            if (((_k = user === null || user === void 0 ? void 0 : user.password) === null || _k === void 0 ? void 0 : _k.length) === 0)
                 return res.send((0, RequestHandler_1.failedResponse)({ message: 'password is required' }));
-            if (((_k = user === null || user === void 0 ? void 0 : user.password) === null || _k === void 0 ? void 0 : _k.length) < 4)
+            if (((_l = user === null || user === void 0 ? void 0 : user.password) === null || _l === void 0 ? void 0 : _l.length) < 4)
                 return res.send((0, RequestHandler_1.failedResponse)({ message: 'password must be at least 4 characters' }));
             const userExist = yield _1.User.findOne({ where: { email: user === null || user === void 0 ? void 0 : user.email } });
-            if (!(userExist === null || userExist === void 0 ? void 0 : userExist.uid) || ((_l = userExist === null || userExist === void 0 ? void 0 : userExist.uid) === null || _l === void 0 ? void 0 : _l.length) == undefined)
+            if (!(userExist === null || userExist === void 0 ? void 0 : userExist.uid) || ((_m = userExist === null || userExist === void 0 ? void 0 : userExist.uid) === null || _m === void 0 ? void 0 : _m.length) == undefined)
                 return res.send((0, RequestHandler_1.failedResponse)({ message: 'No account found with this email' }));
             const expireAt = (0, moment_1.default)().add(10, 'minute').format('YYYY-MM-DD HH:mm:ss');
             const resetData = yield user_model_1.UserPasswordReset.create({
@@ -189,7 +194,7 @@ const AuthMiddleware = {
         }
     }),
     resetPasswordReset: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        var _m;
+        var _o;
         try {
             const { id } = req.body;
             if (!id || id == undefined)
@@ -201,7 +206,7 @@ const AuthMiddleware = {
             if (expired == true)
                 return res.send((0, RequestHandler_1.failedResponse)({ message: 'Password reset link expired' }));
             const userExist = yield _1.User.findByPk(linkExist === null || linkExist === void 0 ? void 0 : linkExist.uid);
-            if (!(userExist === null || userExist === void 0 ? void 0 : userExist.uid) || ((_m = userExist === null || userExist === void 0 ? void 0 : userExist.uid) === null || _m === void 0 ? void 0 : _m.length) == undefined)
+            if (!(userExist === null || userExist === void 0 ? void 0 : userExist.uid) || ((_o = userExist === null || userExist === void 0 ? void 0 : userExist.uid) === null || _o === void 0 ? void 0 : _o.length) == undefined)
                 return res.send((0, RequestHandler_1.failedResponse)({ message: 'Unauthorized user' }));
             yield _1.User.update({
                 password: linkExist === null || linkExist === void 0 ? void 0 : linkExist.password

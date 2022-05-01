@@ -117,6 +117,11 @@ const AuthMiddleware = {
                 if(user?.email && !user?.email.includes('@') && !user?.email.includes('.com')) return res.send(failedResponse({message:'Invalid email provided'}));
                 
                 if(user?.email){
+                  const exist = await User.findOne({where:{email:user?.email}})
+                  
+                  if(exist?.uid){
+                      if(exist?.uid.trim() !== user?.uid?.trim())return res.send(failedResponse({message:'email is already used'}));
+                  }
                   const newEmail = user?.email?.toLowerCase();
                   user.email = newEmail;
                 }
