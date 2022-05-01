@@ -29,7 +29,7 @@ The project can use any DBMS without having to change the code but the database 
 
 ## Database structure
 
-![Database Structure](https://teamsprofile.s3.eu-west-1.amazonaws.com/screen-shots/DB+Structure.pgerd.png)
+![Database Structure](https://teamsprofile.s3.eu-west-1.amazonaws.com/screen-shots/Screen+Shot+2022-05-01+at+9.42.11+PM.png)
 
 
 ## Features
