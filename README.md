@@ -13,7 +13,11 @@ This is the detailed documentation of team API for this [website]('https://teams
 
 [Documentation](https://teams.bookgmt.com)
 
+This project was developed using sql database `(postgresSQL)`. 
 
+This will allow me to perform queries without having to restructure my database in future.
+
+The project can use any DBMS without having to change the code but the database connection string.
 ## Tech Stack
 
 **Client:** [Reactjs]("https://github.com/alwise/interview-team-client")
@@ -26,16 +30,16 @@ This is the detailed documentation of team API for this [website]('https://teams
 
 ## Features
 
-- Create account (email,name,password)
-- Login (email,password)
-- Reset password (email,password)
-- Email links for verification(password reset & invite)
+- Create account (`email`,`name`,`password`)
+- Login (`email`,`password`)
+- Reset password (`email`,`password`)
+- Email links for verification(`password reset` & `invite`)
 - Create team(team name)
-- Invite members(Team owner) using intee's email
-- Accept invite(using link from invitee email)
+- Invite members(Team owner) using intee's `email`
+- Accept invite(using link from invitee `email`)
 - Manage team members(remove team member(only owner))
 - Manage team(delete team)
-- Edit profile(email,name,profile photo)
+- Edit profile(`email`,`name`,`profile photo`)
 - Retrieve teams & team members
 
 
@@ -308,5 +312,4 @@ I'm a full stack developer...
 ## Feedback
 
 If you have any feedback, please reach out to me @kemevoralwise@gmail.com
-
 
