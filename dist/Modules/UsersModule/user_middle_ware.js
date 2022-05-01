@@ -85,6 +85,7 @@ const AuthMiddleware = {
                 uid: exist.uid,
                 email: exist === null || exist === void 0 ? void 0 : exist.email,
                 name: exist === null || exist === void 0 ? void 0 : exist.name,
+                profilePhoto: exist.profilePhoto
                 // username:exist?.username
             });
             return res.send((0, RequestHandler_1.successResponse)({ message: 'Login successfully', data }));
