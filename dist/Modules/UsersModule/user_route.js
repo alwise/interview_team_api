@@ -21,7 +21,7 @@ exports.default = (0, express_1.Router)()
     .post('/login', user_middle_ware_1.default.login)
     .post('/request-reset', user_middle_ware_1.default.requestPasswordReset)
     .patch('/reset-password', user_middle_ware_1.default.resetPasswordReset)
-    .patch('/update', user_middle_ware_1.default.authenticated, (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.UserController.update); }))
+    .patch('/update', user_middle_ware_1.default.authenticated, user_middle_ware_1.default.validateUpdateData, (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.UserController.update); }))
     .delete('/delete', user_middle_ware_1.default.authenticated, (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, MiddleWare_1.handleRequestData)(req, res, _1.UserController.delete); }))
     // .get('/:id',AuthMiddleware.authenticated,async (req: Request, res: Response) =>
     // await handleRequestData(req, res, UserController.findByUid))
