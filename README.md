@@ -27,6 +27,10 @@ The project can use any DBMS without having to change the code but the database 
 
 **REST API:** This is a REST API because it's simple and easy to implement with absolute controll.
 
+## Database structure
+
+![Database Structure](https://teamsprofile.s3.eu-west-1.amazonaws.com/screen-shots/DB+Structure.pgerd.png)
+
 
 ## Features
 
