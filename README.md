@@ -278,7 +278,7 @@ This will send a confirmation email to the user to complete reset.
 | `status`      | `boolean` | true, false
 | `statusCode`      | `int` | 200, 400, 500
 | `message`      | `string` | response message
-| `data`      | `string` |    {},[]
+| `data`      | `object or Array` |    {},[]
 
 ```
 {
