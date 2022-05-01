@@ -99,14 +99,28 @@ const AuthMiddleware = {
       validateUserRegistration: async (req: Request, res: Response, next: any) =>{
             try {
                 const user:Partial<UserInt> = req.body;
-                // console.log(' validating data:   ',user);
                 if(!user?.email || user?.email?.length === 0 || !user?.email.includes('@') || !user?.email.includes('.com')) return res.send(failedResponse({message:'Invalid email provided'}));
-                // if(!user?.email) return res.send(failedResponse({message:'email is required'}));
-                // if(!user?.username) return res.send(failedResponse({message:'username is required'}));
                 if(!user?.password || user?.password?.length < 4) return res.send(failedResponse({message:'password must be at least 4 characters'}));
                 user.password = AuthMiddleware.encodePassword(user?.password);
                 const newEmail = user?.email?.toLowerCase();
                 user.email = newEmail;
+                req.body = user;
+                return next();
+            } catch (error) {
+                return res.send(failedResponse({message:'Unable to complete request',error}));
+            }
+      },
+
+      validateUpdateData: async (req: Request, res: Response, next: any) =>{
+            try {
+                const user:Partial<UserInt> = req.body;
+                if(user?.email && !user?.email.includes('@') && !user?.email.includes('.com')) return res.send(failedResponse({message:'Invalid email provided'}));
+                
+                if(user?.email){
+                  const newEmail = user?.email?.toLowerCase();
+                  user.email = newEmail;
+                }
+               
                 req.body = user;
                 return next();
             } catch (error) {

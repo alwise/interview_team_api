@@ -10,7 +10,7 @@ export default Router()
         .post('/login',AuthMiddleware.login)
         .post('/request-reset',AuthMiddleware.requestPasswordReset)
         .patch('/reset-password',AuthMiddleware.resetPasswordReset)
-        .patch('/update',AuthMiddleware.authenticated,async (req: Request, res: Response) =>
+        .patch('/update',AuthMiddleware.authenticated,AuthMiddleware.validateUpdateData,async (req: Request, res: Response) =>
         await handleRequestData(req, res, UserController.update))
 
         .delete('/delete',AuthMiddleware.authenticated,async (req: Request, res: Response) =>
