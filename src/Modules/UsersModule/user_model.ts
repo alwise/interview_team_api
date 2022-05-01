@@ -72,7 +72,7 @@ export class UserPasswordReset extends Model{
 const UserOperations = {
   create: async (userData: Partial<UserInt>) => await User.create(userData),
   update: async (userData: Partial<UserInt>) =>
-    await User.update({ userData }, { where: { uid: userData.uid } }),
+    await User.update({ ...userData }, { where: { uid: userData?.uid } }),
   delete: async (userData: Partial<UserInt>) =>
     await User.destroy({ where: { uid: userData.uid } }),
   findOneByID: async (uid: string) => await User.findByPk(uid),

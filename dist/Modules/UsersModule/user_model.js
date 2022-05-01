@@ -66,7 +66,7 @@ UserPasswordReset.init({
  */
 const UserOperations = {
     create: (userData) => __awaiter(void 0, void 0, void 0, function* () { return yield User.create(userData); }),
-    update: (userData) => __awaiter(void 0, void 0, void 0, function* () { return yield User.update({ userData }, { where: { uid: userData.uid } }); }),
+    update: (userData) => __awaiter(void 0, void 0, void 0, function* () { return yield User.update(Object.assign({}, userData), { where: { uid: userData === null || userData === void 0 ? void 0 : userData.uid } }); }),
     delete: (userData) => __awaiter(void 0, void 0, void 0, function* () { return yield User.destroy({ where: { uid: userData.uid } }); }),
     findOneByID: (uid) => __awaiter(void 0, void 0, void 0, function* () { return yield User.findByPk(uid); }),
     findManyByOptions: (options) => __awaiter(void 0, void 0, void 0, function* () { return yield User.findAll({ where: Object.assign({}, options) }); }),
