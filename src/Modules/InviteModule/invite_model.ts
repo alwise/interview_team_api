@@ -22,7 +22,7 @@ Invite.init({
 const InviteOperation = {
     create: async (inviteData: Partial<InviteInt>) => await Invite.create(inviteData ),
     update: async (inviteData: Partial<InviteInt>) =>
-      await Invite.update({ inviteData }, { where: { id: inviteData.id } }),
+      await Invite.update({ ...inviteData }, { where: { id: inviteData?.id } }),
     delete: async (inviteData: Partial<InviteInt>) =>
       await Invite.destroy({ where: { id: inviteData.id } }),
     findOneByID: async (id: string) => await Invite.findByPk(id),

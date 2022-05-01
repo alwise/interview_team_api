@@ -27,7 +27,7 @@ Invite.init({
 }, { sequelize: index_1.default, underscored: true, freezeTableName: true });
 const InviteOperation = {
     create: (inviteData) => __awaiter(void 0, void 0, void 0, function* () { return yield Invite.create(inviteData); }),
-    update: (inviteData) => __awaiter(void 0, void 0, void 0, function* () { return yield Invite.update({ inviteData }, { where: { id: inviteData.id } }); }),
+    update: (inviteData) => __awaiter(void 0, void 0, void 0, function* () { return yield Invite.update(Object.assign({}, inviteData), { where: { id: inviteData === null || inviteData === void 0 ? void 0 : inviteData.id } }); }),
     delete: (inviteData) => __awaiter(void 0, void 0, void 0, function* () { return yield Invite.destroy({ where: { id: inviteData.id } }); }),
     findOneByID: (id) => __awaiter(void 0, void 0, void 0, function* () { return yield Invite.findByPk(id); }),
     findManyByOptions: (options) => __awaiter(void 0, void 0, void 0, function* () { return yield Invite.findAll({ where: Object.assign({}, options) }); }),
